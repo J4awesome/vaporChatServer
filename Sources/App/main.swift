@@ -6,10 +6,6 @@ let drop = Droplet()
 
 let room = Room() //init chat room
 
-drop.get { req in
-    return Response(status: .ok, headers: ["Content-Type": "text/html"], body: "<html><p>Looking for the wrong thing</p></html>")
-}
-
 drop.get("stats") { req in
     let stringArray = Array(room.connections.keys)
     return try JSON(["users":stringArray.makeNode(),"userCount":Node(room.connections.count)])
