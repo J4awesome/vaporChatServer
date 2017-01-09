@@ -1,6 +1,5 @@
 import Vapor
 import Foundation
-import HTTP
 
 let drop = Droplet()
 
