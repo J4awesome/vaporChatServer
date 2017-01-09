@@ -4,8 +4,16 @@ import HTTP
 
 let drop = Droplet()
 
+let room = Room() //init chat room
+
 drop.get { req in
     return Response(status: .ok, headers: ["Content-Type": "text/html"], body: "<html><p>Looking for the wrong thing</p></html>")
+}
+
+drop.get("stats") { req in
+    let stringArray = Array(room.connections.keys)
+    return try JSON(["users":stringArray.makeNode(),"userCount":Node(room.connections.count)])
+
 }
 
 //MARK: - JSON
@@ -23,7 +31,6 @@ func convertToDictionary(string:String) -> [String:Any]? {
 
 //MARK: - Sockets
 
-let room = Room() //init chat room
 
 drop.socket("chat") { req, ws in
     var username:String? = nil
@@ -46,7 +53,7 @@ drop.socket("chat") { req, ws in
         }
         
         if let message = json?["message"] {
-            print(username!,message)
+            print("got message \(username!):\(message)")
             try room.sendMessage(user: username!, message: message as! String)
         }
     }
