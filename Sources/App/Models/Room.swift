@@ -11,13 +11,12 @@ class Room {
     
     func sendMessage(user:String,message:String) throws {
         let jsonText = ["username":user,"message":message]
-        let error = NSError()
         do {
             let jsonData: Data = try JSONSerialization.data(withJSONObject: jsonText, options: JSONSerialization.WritingOptions.prettyPrinted) as Data
-            let jsonString = NSString(data: jsonData as Data, encoding: String.Encoding.utf8.rawValue)! as String
+            let jsonString = String(data: jsonData, encoding: String.Encoding.utf8)
             
             for (username,socket) in self.connections {
-                try socket.send(jsonString)
+                try socket.send(jsonString!)
             }
         } catch {
             print(error.localizedDescription)

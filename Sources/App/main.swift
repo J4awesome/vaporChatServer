@@ -8,7 +8,7 @@ let room = Room() //init chat room
 drop.get("stats") { req in
     let stringArray = Array(room.connections.keys)
     return try JSON(["users":stringArray.makeNode(),"userCount":Node(room.connections.count)])
-
+    
 }
 
 //MARK: - JSON
@@ -16,7 +16,7 @@ drop.get("stats") { req in
 func convertToDictionary(string:String) -> [String:Any]? {
     if let textData = string.data(using: .utf8) {
         do {
-            return try JSONSerialization.jsonObject(with: textData, options: []) as! [String:Any]
+            return try JSONSerialization.jsonObject(with: textData, options: []) as? [String:Any]
         } catch {
             print(error.localizedDescription)
         }
