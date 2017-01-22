@@ -26,7 +26,6 @@ func convertToDictionary(string:String) -> [String:Any]? {
 
 //MARK: - Sockets
 
-
 drop.socket("chat") { req, ws in
     var username:String? = nil
     
